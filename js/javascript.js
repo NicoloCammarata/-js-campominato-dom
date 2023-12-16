@@ -1,5 +1,29 @@
 const myButton = document.getElementById('button')
+let points = 0;
+function wasted (){
+    let Container = document.getElementById("container")
+    Container.innerHTML = "<div><strong>" + 
+                                "wasted" + "<div>" + "Punteggio: " + points + "</div>" ;
+                            "</strong></div>" ;
+    Container.classList.add('wasted')
+}; 
 
+function win (){
+    let Container = document.getElementById("container")
+    Container.innerHTML = "<div><strong>" + 
+                                "You win" + "<div>" + "Punteggio: " + points + "</div>" ;
+                            "</strong></div>" ;
+    Container.classList.add('win')
+}; 
+
+
+
+
+/*function punteggio (){
+    let punteggio = document.getElementById("punteggio")
+    punteggio.innerText = "<div>" + "Punteggio:" + points + "</div>" ;
+    Container.classList.add('wasted')
+}; */
 
 
 
@@ -12,13 +36,16 @@ function getRndInteger(min, max) {
 
 
 
+
+
 myButton.addEventListener('click', function () {
     let Container = document.getElementById("container")
     Container.classList.add('d-block');
 
     
     const Bomb = []
-    for(let i = 1; i <= 16; i++){
+    let i = 0;
+    while( Bomb.length < 16){
         const randomNum = getRndInteger(1, 100);
         console.log(randomNum)
         if(Bomb.includes(randomNum) == false){
@@ -26,11 +53,11 @@ myButton.addEventListener('click', function () {
             Bomb.push(randomNum)
 
         }
+        
+        i++ 
 
         
-
         
-       
     }; 
 
     console.log(Bomb)
@@ -50,17 +77,52 @@ myButton.addEventListener('click', function () {
 
         newCell.addEventListener('click', function () {
 
-            const NumbernewCell = parseInt(this.innerText);
+            
 
-            if (Bomb.includes(NumbernewCell) == true) {
+            const clickedCell = parseInt(this.innerText);
+    
+            if (Bomb.includes(clickedCell) == true) {
                 
                 newCell.classList.add("lost")
-                
+
+                setTimeout(wasted, 500);
+
+                 
             }
-            else {
-                newCell.classList.add("clicked")
+            
+            else if(Bomb.includes(clickedCell) == false){
+                
+
+                if(newCell.classList.contains("clicked") == false){
+                    newCell.classList.add("clicked")
+                    
+                        
+                    points++;
+                    console.log(points)
+
+                    
+        
+                }
+                
+    
+     
     
             }
+
+            if(points == 84){
+                setTimeout(win, 500);
+                console.log('you win')
+            }
+            
+            
+
+            
+            
+                
+
+            
+
+            
         
         });
     
